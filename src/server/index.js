@@ -3,6 +3,8 @@ import compression from 'compression'
 import path from 'path'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
+import axios from 'axios'
+
 import App from '../components/App'
 import template from './template'
 
@@ -20,15 +22,25 @@ app.use(compression())
 app.use(express.static(path.join(process.cwd(), KYT.PUBLIC_DIR)))
 
 app.get('*', (request, response) => {
-  response.send(
-    template({
-      html: renderToString(<App />),
-      manifestJSBundle: clientAssets['manifest.js'],
-      mainJSBundle: clientAssets['main.js'],
-      vendorJSBundle: clientAssets['vendor.js'],
-      mainCSSBundle: clientAssets['main.css'],
+  let cardData
+  axios
+    .get('https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json')
+    .then(res => {
+      cardData = res.data
     })
-  )
+    .then(
+      response.send(
+        template({
+          data: cardData,
+          html: renderToString(<App />),
+          manifestJSBundle: clientAssets['manifest.js'],
+          mainJSBundle: clientAssets['main.js'],
+          vendorJSBundle: clientAssets['vendor.js'],
+          mainCSSBundle: clientAssets['main.css'],
+        })
+      )
+    )
+    .catch(err => console.log(err))
 })
 
 app.listen(port, () => {

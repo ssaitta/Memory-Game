@@ -1,6 +1,6 @@
 {
   "name": "nyt-games-web-code-test",
-  "author": "Your Name Here",
+  "author": "Sierra Saitta",
   "description": "A game we won’t soon forget",
   "version": "1.0.0",
   "license": "SEE LICENSE IN LICENSE.md",
@@ -10,13 +10,19 @@
   },
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-preset-kyt-react": "0.3.0",
     "compression": "1.7.1",
     "express": "4.16.2",
     "kyt": "0.9.0",
     "prop-types": "15.6.0",
     "react": "16.1.1",
-    "react-dom": "16.1.1"
+    "react-dom": "16.1.1",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "enzyme": "3.2.0",
@@ -26,7 +32,7 @@
     "dev": "kyt dev",
     "build": "kyt build",
     "start": "node build/server/main.js",
-    "proto": "kyt proto",
+    "": "kyt proto",
     "test": "kyt test",
     "test-watch": "kyt test -- --watch",
     "test-coverage": "kyt test -- --coverage",
