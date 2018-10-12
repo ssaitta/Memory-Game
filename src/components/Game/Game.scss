@@ -1,10 +1,150 @@
 $hey-look-at-me-im-a-sass-variable: #333;
+$text-font: 'Kodchasan', sans-serif;
 
-.header {
-  color: $hey-look-at-me-im-a-sass-variable;
-  font-family: sans-serif;
+.body{
+  height: 120vh;
+  width: auto;
+  background-color: whitesmoke;
 }
 
-.placeholder {
-  font-style: italic;
+.horizontalLineShort{
+  border-bottom: 2px solid lightgrey;
+  width: 60vw;
+}
+
+.horizontalLineLong{
+  border-bottom: 2px solid lightgrey;
+  width: 80vw;
+}
+
+.header {
+  padding: 10vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  font-family: sans-serif;
+  // border-radius: 15%;
+  height: 100vh;
+  // background-color: whitesmoke;
+  // background-image: radial-gradient(#add8e678 48%, transparent 81%);
+}
+
+.title{
+  margin-bottom: 2vh;
+  font-size:5em;
+  font-family: $text-font;
+  color: black;
+  text-shadow: 2px 1px #868686;
+}
+
+.subTitle{
+  font-size:2em;
+  font-family: $text-font;
+  color: grey;
+  text-shadow: 1px 1px #3a3939;
+  margin-bottom: 10px;
+}
+
+.resetBtn{
+  border: 1px solid black;
+}
+
+.cardRow {
+  display: flex;
+  flex-direction: row; 
+  justify-content:space-around;
+  align-items: center;
+}
+
+.card{
+  display: flex;
+  // border: 2px solid red;
+  margin: 30px;
+  border-radius: 15px;
+  background-color: #3aa03a;
+  color:#FAE24C;
+  padding: 5px;
+}
+
+.innderCard{
+  text-align: center;
+  margin-top: 5%;
+}
+
+.backOfCard{
+  color: transparent;
+  background-size: cover; 
+  border: 1px solid grey;
+  background-image: url('https://cdn-images-1.medium.com/max/407/1*-S78iSFaDtxqWvqj_4NM6w.jpeg');
+}
+
+@media screen and (min-width: 860px){
+  .innerCard{
+    padding-top: 40px;
+    font-size: 100px;
+    width: 150px;
+    height: 156px;
+  }
+}
+
+@media screen and (max-width: 950px) and (min-width: 650px){
+  .card{
+    border-radius: 8px;
+    margin: 25px;
+  }
+
+  .innerCard{
+    padding-top: 29px;
+    font-size: 72px;
+    width: 90px;
+    height: 109px;
+  }
+}
+
+@media screen and (max-width: 650px) and (min-width: 426px){
+  .card{
+    border-radius: 8px;
+    margin: 10px;
+  }
+
+  .title{
+    font-size: 3em;
+  }
+
+  .subTitle{
+    font-size: 2em;
+  }
+
+  .innerCard{
+    padding-top: 26px;
+    font-size: 62px;
+    width: 70px;
+    height: 92px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 425px){
+  .card{
+    border-radius: 8px;
+    margin: 10px;
+  }
+
+  .title{
+    font-size: 2.5em;
+  }
+
+  .subTitle{
+    font-size: 1.5em;
+  }
+
+  .innerCard{
+    padding-top: 20px;
+    margin-top: 0%;
+    font-size: 54px;
+    width: 55px;
+    height: 80px;
+    text-align: center;
+  }
 }

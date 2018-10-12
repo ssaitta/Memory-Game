@@ -4,17 +4,29 @@ import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import board from './board'
+import chosenCards from './chosenCards'
+import difficulty from './difficulty'
+import timer from './timer'
 
-const reducer = combineReducers({
-  board,
-})
+const reducer = combineReducers(
+    {
+        board,
+        chosenCards,
+        difficulty,
+        timer,
+    }
+)
 
 const middleware = composeWithDevTools(applyMiddleware(
     thunkMiddleware,
-    createLogger({ collapsed: true })
-))
+    createLogger({collapsed: true})
+  ))
 
 const store = createStore(reducer, middleware)
 
 export default store
 export * from './board'
+export * from './chosenCards'
+export * from './difficulty'
+export * from './timer'
+

@@ -25,11 +25,15 @@ class TimerContainer extends React.Component {
     super(props)
     this.state = {
       secondsElapsed: 0,
+      isPaused: false,
+      playButton: true,
     }
+    this.tick = this.tick.bind(this)
+    this.toggleTimer = this.toggleTimer.bind(this)
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.tick.bind(this), 1000)
+    this.interval = setInterval(this.tick, 1000)
   }
 
   componentWillUnmount() {
@@ -37,13 +41,33 @@ class TimerContainer extends React.Component {
   }
 
   tick() {
-    this.setState({
-      secondsElapsed: this.state.secondsElapsed + 1,
-    })
+    if(this.state.isPaused){
+      this.setState({
+        secondsElapsed: this.state.secondsElapsed + 1,
+      })
+    }
+  }
+
+  toggleTimer(e){
+    e.preventDefault()
+      this.setState({
+        isPaused: !this.state.isPaused,
+        playButton: !this.state.playButton,
+      })
   }
 
   render() {
-    return <Timer time={this.state.secondsElapsed} />
+    return( 
+      <div>
+      <Timer time={this.state.secondsElapsed} />
+      {this.state.playButton &&  
+      <button className={styles.timerButton} onClick={e=>this.toggleTimer(e)}>Start</button>
+      }
+      {!this.state.playButton &&
+      <button className={styles.timerButton} onClick={e=>this.toggleTimer(e)}>Pause</button>
+      }
+      </div>
+    )
   }
 }
 

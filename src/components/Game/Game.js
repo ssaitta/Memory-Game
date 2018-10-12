@@ -1,17 +1,51 @@
-import React from 'react'
+import React, { Component }  from 'react'
+import { connect } from 'react-redux'
 
 import Timer from '../Timer/Timer'
-import Board from './Board'
-
 import styles from './Game.scss'
+import Board from './Board'
+import ButtonContainer from '../Buttons/ButtonContainer'
+import { setDifficulty, fetchCards, resetTime } from '../../store'
 
-const Game = () => (
-  <div>
-    <h1 className={styles.header}>NYT Games Code Test</h1>
-    <Timer />
-    <Board />
-    <div className={styles.placeholder}>Let the games begin (here).</div>
-  </div>
-)
+const mapStateToProps = state => ({
+  board: state.board,
+  difficulty: state.difficulty,
+})
 
-export default Game
+const mapDispatchToProps = dispatch => ({
+  setDifficulty(difficulty){
+    dispatch(setDifficulty(difficulty))
+  },
+  newBoard(difficulty){
+    dispatch(fetchCards(difficulty))
+  },
+  resetTimer(){
+      dispatch(resetTime())
+  },
+})
+
+class Game extends Component{
+  
+  componentDidUpdate(prevProps){
+    if(this.props.board !== prevProps.board){
+      // console.log("new board")
+        // this.props.newBoard(this.props.difficulty)
+    }
+  }
+
+  render(){
+    return(
+      <div className={styles.header}>
+        <h1 className={styles.title}>Memory</h1>
+        <span className={styles.subTitle}>Match the cards to win!</span>
+        <div className={styles.horizontalLineShort}></div>
+        <Timer />
+        <div className={styles.horizontalLineLong}></div>
+        <Board />
+        <ButtonContainer />
+      </div>
+    )
+  }
+} 
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game)
