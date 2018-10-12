@@ -1,64 +1,76 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import styles from '../Game/Game.scss'
-import chosenCards from '../../store/chosenCards'
-import { chooseCard1, chooseCard2, resetChoices } from '../../store'
+import { chooseCard1, chooseCard2, resetChoices, flipCard } from '../../store'
 
 const mapStateToProps = state => ({
   chosenCards: state.chosenCards,
-  board: state.board,
 })
 
 const mapDisptchToProps = dispatch => ({
-  pickCard(card, row, col, turn) {
+  pickCard(card, turn) {
     if (turn === 1) {
-      dispatch(chooseCard1(card, row, col))
+      dispatch(chooseCard1(card))
     } else {
-      dispatch(chooseCard2(card, row, col))
+      dispatch(chooseCard2(card))
     }
   },
   resetCards() {
     dispatch(resetChoices())
   },
+  flip(card) {
+    dispatch(flipCard(card))
+  },
 })
 
 class Card extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { cardHidden: true }
-  }
-
   onClick(e, card) {
-    if (!this.props.chosenCards.card1) {
-      this.props.pickCard(card, 1)
-      this.setState({ cardHidden: false })
-    } else if (!this.props.chosenCards.card2) {
-      if (row !== this.props.chosenCards.card1.row || col !== this.props.chosenCards.card1.column) {
-        this.props.pickCard(card, 2)
-        this.setState({ cardHidden: false })
+    const { card1, card2 } = this.props.chosenCards
+    const { pickCard, flip } = this.props
+    e.preventDefault()
+    if (!card1) {
+      pickCard(card, 1)
+      flip(card)
+    } else if (!card2) {
+      if (card.row !== card1.row || card.column !== card1.column) {
+        pickCard(card, 2)
+        flip(card)
       }
-    } else if (this.props.chosenCards.card1 && this.props.chosenCards.card2) {
+    } else if (card1 && card2) {
+      flip(card1)
+      flip(card2)
       this.props.resetCards()
-      this.props.pickCard(card, 1)
-      this.setState({ cardHidden: false })
+      pickCard(card, 1)
+      flip(card)
     }
   }
   render() {
-    let { card } = this.props
-    let classes = [styles.card]
-    if (this.state.cardHidden) {
-      classes.push(styles.backOfCard)
+    const { card } = this.props
+    let classes = []
+    if (card && card.hidden) {
+      classes = [styles.card, styles.backOfCard]
+    } else {
+      classes = [styles.card]
     }
     return (
       <div>
         {card && (
-          <div className={classes.join(' ')} onClick={e => this.onClick(e, card)}>
+          <button className={classes.join(' ')} onClick={e => this.onClick(e, card)}>
             <span className={styles.innerCard}>{card.value}</span>
-          </div>
+          </button>
         )}
       </div>
     )
   }
+}
+
+Card.propTypes = {
+  chosenCards: PropTypes.instanceOf(Object).isRequired,
+  card: PropTypes.instanceOf(Object),
+  pickCard: PropTypes.func.isRequired,
+  resetCards: PropTypes.func.isRequired,
+  flip: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDisptchToProps)(Card)
