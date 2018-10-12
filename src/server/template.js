@@ -17,7 +17,7 @@ export default vo => `<!DOCTYPE html>
         : ''
     }
 
-    <title>NYT Games Web Code Test</title>
+    <title>Sierra Saitta-Zelterman Memory Game</title>
   </head>
 
   <body>

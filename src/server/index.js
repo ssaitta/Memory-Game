@@ -5,7 +5,6 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import App from '../components/App'
 import template from './template'
-import axios from 'axios'
 
 const clientAssets = require(KYT.ASSETS_MANIFEST) // eslint-disable-line import/no-dynamic-require
 const port = parseInt(KYT.SERVER_PORT, 10)

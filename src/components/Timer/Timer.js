@@ -41,31 +41,35 @@ class TimerContainer extends React.Component {
   }
 
   tick() {
-    if(this.state.isPaused){
+    if (this.state.isPaused) {
       this.setState({
         secondsElapsed: this.state.secondsElapsed + 1,
       })
     }
   }
 
-  toggleTimer(e){
+  toggleTimer(e) {
     e.preventDefault()
-      this.setState({
-        isPaused: !this.state.isPaused,
-        playButton: !this.state.playButton,
-      })
+    this.setState({
+      isPaused: !this.state.isPaused,
+      playButton: !this.state.playButton,
+    })
   }
 
   render() {
-    return( 
+    return (
       <div>
-      <Timer time={this.state.secondsElapsed} />
-      {this.state.playButton &&  
-      <button className={styles.timerButton} onClick={e=>this.toggleTimer(e)}>Start</button>
-      }
-      {!this.state.playButton &&
-      <button className={styles.timerButton} onClick={e=>this.toggleTimer(e)}>Pause</button>
-      }
+        <Timer time={this.state.secondsElapsed} />
+        {this.state.playButton && (
+          <button className={styles.timerButton} onClick={e => this.toggleTimer(e)}>
+            Start
+          </button>
+        )}
+        {!this.state.playButton && (
+          <button className={styles.timerButton} onClick={e => this.toggleTimer(e)}>
+            Pause
+          </button>
+        )}
       </div>
     )
   }
