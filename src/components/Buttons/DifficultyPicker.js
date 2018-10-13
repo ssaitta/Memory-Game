@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setDifficulty } from '../../store'
-import styles from '../Game/Game.scss'
+import PropTypes from 'prop-types'
 
-const mapStateToProps = state => ({
-  difficulty: state.difficulty,
-})
+import { setDifficulty, fetchCards } from '../../store'
+import styles from '../Game/Game.scss'
 
 const mapDispatchToProps = dispatch => ({
   setDifficulty(difficulty) {
     dispatch(setDifficulty(difficulty))
   },
+  // newBoard(difficulty){
+  //   dispatch(fetchCards(difficulty))
+  // },
 })
 
 class Difficulty extends Component {
@@ -55,4 +56,8 @@ class Difficulty extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Difficulty)
+Difficulty.propTypes = {
+  setDifficulty: PropTypes.func.isRequired,
+}
+
+export default connect(null, mapDispatchToProps)(Difficulty)

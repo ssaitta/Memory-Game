@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import Timer from '../Timer/Timer'
 import styles from './Game.scss'
@@ -10,6 +11,7 @@ import { setDifficulty, fetchCards, resetTime } from '../../store'
 const mapStateToProps = state => ({
   board: state.board,
   difficulty: state.difficulty,
+  chosenCards: state.chosenCards,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -25,12 +27,13 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class Game extends Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.board !== prevProps.board) {
-      // console.log("new board")
-      // this.props.newBoard(this.props.difficulty)
-    }
-  }
+
+  // componentDidUpdate(prevProps) {
+  //   // if (this.props.chosenCards !== prevProps.chosenCards) {
+  //   //   console.log("new board")
+  //   //   this.props.newBoard(this.props.difficulty)
+  //   // }
+  // }
 
   render() {
     return (
@@ -45,6 +48,14 @@ class Game extends Component {
       </div>
     )
   }
+}
+
+Game.propTypes = {
+  board: PropTypes.instanceOf(Array).isRequired,
+  difficulty: PropTypes.string.isRequired,
+  // setDifficulty: PropTypes.func.isRequired,
+  // newBoard: PropTypes.func.isRequired,
+  resetTimer: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game)

@@ -61,12 +61,12 @@ class TimerContainer extends React.Component {
       <div>
         <Timer time={this.state.secondsElapsed} />
         {this.state.playButton && (
-          <button className={styles.timerButton} onClick={e => this.toggleTimer(e)}>
+          <button className={styles.timerButton} onClick={this.toggleTimer}>
             Start
           </button>
         )}
         {!this.state.playButton && (
-          <button className={styles.timerButton} onClick={e => this.toggleTimer(e)}>
+          <button className={styles.timerButton} onClick={this.toggleTimer}>
             Pause
           </button>
         )}

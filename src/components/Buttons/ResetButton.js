@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCards } from '../../store'
+import PropTypes from 'prop-types'
+
+import { resetCards, resetChoices } from '../../store'
 import styles from '../Game/Game.scss'
 
 const mapStateToProps = state => ({
   board: state.board,
-  difficulty: state.difficulty,
 })
 
 const mapDispatchToProps = dispatch => ({
-  newBoard(difficulty) {
-    dispatch(fetchCards(difficulty))
+  resetBoard(cards) {
+    dispatch(resetCards(cards))
+  },
+  resetCards() {
+    dispatch(resetChoices())
   },
 })
 
@@ -21,7 +25,8 @@ class ResetButton extends Component {
   }
 
   onClick() {
-    this.props.newBoard(this.props.difficulty)
+    this.props.resetCards()
+    this.props.resetBoard(this.props.board)
   }
 
   render() {
@@ -31,6 +36,12 @@ class ResetButton extends Component {
       </button>
     )
   }
+}
+
+ResetButton.propTypes = {
+  board: PropTypes.instanceOf(Array).isRequired,
+  resetBoard: PropTypes.func.isRequired,
+  resetCards: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetButton)
