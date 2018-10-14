@@ -2,19 +2,29 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { resetCards, resetChoices } from '../../store'
+import { resetCards, resetChoices, updateStatus, pauseTime, resetTime } from '../../store'
 import styles from '../Game/Game.scss'
 
 const mapStateToProps = state => ({
   board: state.board,
+  status: state.status,
 })
 
 const mapDispatchToProps = dispatch => ({
   resetBoard(cards) {
     dispatch(resetCards(cards))
   },
-  resetCards() {
+  resetChosen() {
     dispatch(resetChoices())
+  },
+  updateStatusInProgress() {
+    dispatch(updateStatus('In Progress'))
+  },
+  togglePause(bool) {
+    dispatch(pauseTime(bool))
+  },
+  resetClock() {
+    dispatch(resetTime())
   },
 })
 
@@ -25,14 +35,25 @@ class ResetButton extends Component {
   }
 
   onClick() {
-    this.props.resetCards()
-    this.props.resetBoard(this.props.board)
+    const { resetChosen, resetBoard, updateStatusInProgress, togglePause, resetClock } = this.props
+    resetChosen()
+    resetBoard(this.props.board)
+    updateStatusInProgress()
+    togglePause(true)
+    resetClock()
   }
 
   render() {
+    if (this.props.status === 'In Progress') {
+      return (
+        <button className={styles.resetBtn} onClick={this.onClick}>
+          Reset
+        </button>
+      )
+    }
     return (
-      <button className={styles.resetBtn} onClick={this.onClick}>
-        Reset
+      <button className={styles.playAgainBtn} onClick={this.onClick}>
+        Play again?
       </button>
     )
   }
@@ -40,8 +61,12 @@ class ResetButton extends Component {
 
 ResetButton.propTypes = {
   board: PropTypes.instanceOf(Array).isRequired,
+  status: PropTypes.string,
   resetBoard: PropTypes.func.isRequired,
-  resetCards: PropTypes.func.isRequired,
+  resetChosen: PropTypes.func.isRequired,
+  updateStatusInProgress: PropTypes.func.isRequired,
+  togglePause: PropTypes.func.isRequired,
+  resetClock: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetButton)

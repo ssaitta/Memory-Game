@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import styles from './Timer.scss'
+import { pauseTime, resetTime, incrementTime } from '../../store'
 
 export const formatTime = time => {
   if (time < 0) return '--:--'
@@ -20,14 +22,25 @@ Timer.propTypes = {
   time: PropTypes.number,
 }
 
+const mapStateToProps = state => ({
+  timer: state.timer,
+})
+
+const mapDispatchToProps = dispatch => ({
+  togglePause(bool) {
+    dispatch(pauseTime(bool))
+  },
+  resetClock() {
+    dispatch(resetTime())
+  },
+  increment() {
+    dispatch(incrementTime())
+  },
+})
+
 class TimerContainer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      secondsElapsed: 0,
-      isPaused: false,
-      playButton: true,
-    }
     this.tick = this.tick.bind(this)
     this.toggleTimer = this.toggleTimer.bind(this)
   }
@@ -37,35 +50,32 @@ class TimerContainer extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.resetClock()
     clearInterval(this.interval)
   }
 
   tick() {
-    if (this.state.isPaused) {
-      this.setState({
-        secondsElapsed: this.state.secondsElapsed + 1,
-      })
+    if (!this.props.timer.pause) {
+      this.props.increment()
     }
   }
 
   toggleTimer(e) {
     e.preventDefault()
-    this.setState({
-      isPaused: !this.state.isPaused,
-      playButton: !this.state.playButton,
-    })
+    this.props.togglePause(!this.props.timer.pause)
   }
 
   render() {
+    const { timer } = this.props
     return (
       <div>
-        <Timer time={this.state.secondsElapsed} />
-        {this.state.playButton && (
+        <Timer time={timer.secondsElapsed} />
+        {timer.pause && (
           <button className={styles.timerButton} onClick={this.toggleTimer}>
             Start
           </button>
         )}
-        {!this.state.playButton && (
+        {!timer.pause && (
           <button className={styles.timerButton} onClick={this.toggleTimer}>
             Pause
           </button>
@@ -75,4 +85,11 @@ class TimerContainer extends React.Component {
   }
 }
 
-export default TimerContainer
+TimerContainer.propTypes = {
+  timer: PropTypes.instanceOf(Object).isRequired,
+  resetClock: PropTypes.func.isRequired,
+  increment: PropTypes.func.isRequired,
+  togglePause: PropTypes.func.isRequired,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimerContainer)

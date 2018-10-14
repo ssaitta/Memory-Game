@@ -1,4 +1,4 @@
-export const checkCards = function(chosenCards) {
+export const checkCards = chosenCards => {
   if (
     chosenCards.card1 &&
     chosenCards.card2 &&
@@ -9,9 +9,4 @@ export const checkCards = function(chosenCards) {
   return false
 }
 
-// const newStatus = chosenCards => {
-//   const win = check(chosenCards)
-//   return win || 'In Progress'
-// }
-
-// export default newStatus
+export const checkBoard = board => board.every(card => card.matched === true)

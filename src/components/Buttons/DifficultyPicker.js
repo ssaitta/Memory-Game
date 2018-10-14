@@ -2,16 +2,22 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { setDifficulty, fetchCards } from '../../store'
+import { setDifficulty, updateStatus, pauseTime, resetTime } from '../../store'
 import styles from '../Game/Game.scss'
 
 const mapDispatchToProps = dispatch => ({
-  setDifficulty(difficulty) {
+  updateDifficulty(difficulty) {
     dispatch(setDifficulty(difficulty))
   },
-  // newBoard(difficulty){
-  //   dispatch(fetchCards(difficulty))
-  // },
+  updateStatusInProgress() {
+    dispatch(updateStatus('In Progress'))
+  },
+  togglePause(bool) {
+    dispatch(pauseTime(bool))
+  },
+  resetClock() {
+    dispatch(resetTime())
+  },
 })
 
 class Difficulty extends Component {
@@ -21,7 +27,11 @@ class Difficulty extends Component {
   }
 
   onClick(e) {
-    this.props.setDifficulty(e.target.value)
+    const { updateDifficulty, updateStatusInProgress, togglePause, resetClock } = this.props
+    updateDifficulty(e.target.value)
+    updateStatusInProgress()
+    togglePause(true)
+    resetClock()
   }
 
   render() {
@@ -57,7 +67,10 @@ class Difficulty extends Component {
 }
 
 Difficulty.propTypes = {
-  setDifficulty: PropTypes.func.isRequired,
+  updateDifficulty: PropTypes.func.isRequired,
+  updateStatusInProgress: PropTypes.func.isRequired,
+  togglePause: PropTypes.func.isRequired,
+  resetClock: PropTypes.func.isRequired,
 }
 
 export default connect(null, mapDispatchToProps)(Difficulty)

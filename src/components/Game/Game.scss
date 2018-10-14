@@ -17,7 +17,7 @@ $text-font: 'Kodchasan', sans-serif;
 }
 
 .header {
-  padding: 10vh;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -74,7 +74,7 @@ $text-font: 'Kodchasan', sans-serif;
 }
 
 .backOfCard{
-  // color: transparent;
+  color: transparent;
   background-size: cover; 
   border: 1px solid grey;
   background-image: url('../../assets/img/babar.jpeg');
@@ -85,6 +85,12 @@ $text-font: 'Kodchasan', sans-serif;
 
 .matched{
   pointer-events: none;
+}
+
+.playAgainBtn{
+  height: 90px;
+  width: 90px;
+  border: 1px solid black;
 }
 
 @media screen and (min-width: 860px){

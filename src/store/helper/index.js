@@ -1,13 +1,23 @@
+const findCard = (currentCard, cardArray) => {
+  let index = null
+  cardArray.forEach((card, ind) => {
+    if (currentCard.row === card.row && currentCard.column === card.column) {
+      index = ind
+    }
+  })
+  return index
+}
+
 export const toggleHide = (card, cardArray) => {
-  const index = cardArray.indexOf(card)
-  const newCard = Object.assign({}, card, {hidden:!card.hidden})
-  return [].concat(cardArray.slice(0, index), newCard, cardArray.slice(index+1))
+  const index = findCard(card, cardArray)
+  const newCard = Object.assign({}, card, { hidden: !card.hidden })
+  return [].concat(cardArray.slice(0, index), newCard, cardArray.slice(index + 1))
 }
 
 export const toggleMatched = (card, cardArray) => {
-  const index = cardArray.indexOf(card)
-  const newCard = Object.assign({}, card, {matched:!card.matched})
-  return [].concat(cardArray.slice(0, index), newCard, cardArray.slice(index+1))
+  const index = findCard(card, cardArray)
+  const newCard = Object.assign({}, card, { matched: !card.matched })
+  return [].concat(cardArray.slice(0, index), newCard, cardArray.slice(index + 1))
 }
 
 export const shuffle = array => {

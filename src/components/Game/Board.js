@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import Confetti from 'react-confetti'
 
 import {
   fetchCards,
@@ -10,28 +11,33 @@ import {
   chooseCard1,
   chooseCard2,
   flipCard,
-  resetCards,
+  disableCard1,
+  disableCard2,
+  updateStatus,
+  pauseTime,
 } from '../../store'
 import CardRow from './CardRow'
-import { checkCards } from '../../client/gameLogic'
+import { checkCards, checkBoard } from '../../client/gameLogic'
 
 const mapStateToProps = state => ({
   board: state.board,
   difficulty: state.difficulty,
   chosenCards: state.chosenCards,
+  status: state.status,
+  timer: state.timer,
 })
 
 const mapDispatchToProps = dispatch => ({
-  setDifficulty(difficulty) {
+  updateDifficulty(difficulty) {
     dispatch(setDifficulty(difficulty))
   },
   newBoard(difficulty) {
     dispatch(fetchCards(difficulty))
   },
-  resetChoices() {
+  resetChosen() {
     dispatch(resetChoices())
   },
-  matchedCards(card) {
+  matchedCard(card) {
     dispatch(matchedCards(card))
   },
   pickCard(card, turn) {
@@ -41,11 +47,21 @@ const mapDispatchToProps = dispatch => ({
       dispatch(chooseCard2(card))
     }
   },
+  disableCard(card, turn) {
+    if (turn === 1) {
+      dispatch(disableCard1(card))
+    } else {
+      dispatch(disableCard2(card))
+    }
+  },
   flip(card) {
     dispatch(flipCard(card))
   },
-  resetCards() {
-    dispatch(resetCards())
+  updateStatusWon() {
+    dispatch(updateStatus('Won'))
+  },
+  togglePause(bool) {
+    dispatch(pauseTime(bool))
   },
 })
 
@@ -73,46 +89,48 @@ class Board extends Component {
   }
 
   componentDidMount() {
-    this.props.setDifficulty('easy')
-    this.props.newBoard(this.props.difficulty)
+    const { updateDifficulty, newBoard } = this.props
+    updateDifficulty('easy')
+    newBoard(this.props.difficulty)
   }
 
   componentDidUpdate(prevProps) {
-    const { card1, card2 } = this.props.chosenCards
-    let { flip, resetChoices, matchedCards, chosenCards } = this.props
-    if (this.props.difficulty !== prevProps.difficulty) {
-      this.props.newBoard(this.props.difficulty)
-      this.props.resetChoices()
+    const { newBoard, resetChosen, togglePause, updateStatusWon, board, difficulty } = this.props
+    if (difficulty !== prevProps.difficulty) {
+      newBoard(difficulty)
+      resetChosen()
     }
-
-    // if (this.props.chosenCards !== prevProps.chosenCards) {
-    //   if (checkCards(chosenCards)) {
-    //     matchedCards(card1)
-    //     matchedCards(card2)
-    //   }
-    // }
+    if (board !== prevProps.board) {
+      if (checkBoard(board)) {
+        togglePause(true)
+        updateStatusWon()
+      }
+    }
   }
 
   pauseAndFlip() {
     const { card1, card2 } = this.props.chosenCards
-    let { flip, resetChoices, matchedCards, chosenCards } = this.props
-    console.log('Pause and Flip ')
+    const { flip, resetChosen, disableCard, chosenCards, matchedCard } = this.props
     if (checkCards(chosenCards)) {
-      matchedCards(card1)
-      matchedCards(card2)
+      matchedCard(card1)
+      matchedCard(card2)
+      disableCard(card1, 1)
+      disableCard(card2, 2)
+      resetChosen()
+    } else {
+      flip(card1)
+      flip(card2)
+      resetChosen()
     }
-    //   resetChoices()
-    // } else {
-    //   flip(card1)
-    //   flip(card2)
-    //   resetChoices()
-    // }
   }
 
   cardClick(e, card) {
     e.preventDefault()
     const { card1, card2 } = this.props.chosenCards
-    const { pickCard, flip, board } = this.props
+    const { pickCard, flip, timer, togglePause } = this.props
+    if (timer.pause) {
+      togglePause(false)
+    }
     if (!card1) {
       pickCard(card, 1)
       flip(card)
@@ -120,38 +138,31 @@ class Board extends Component {
       if (card.row !== card1.row || card.column !== card1.column) {
         pickCard(card, 2)
         flip(card)
+        this.pause = setTimeout(this.pauseAndFlip, 700)
       }
     }
-    // else if (card1 && card2) {
-    //   flip(card1)
-    //   flip(card2)
-    //   if (checkCards(this.props.chosenCards)) {
-    //     this.props.matchedCards(card1)
-    //     this.props.matchedCards(card2)
-    //   }
-    //   console.log("This", this)
-
-    //   pickCard(card, 1)
-    //   flip(card)
-    // }
   }
 
   render() {
-    const { board, difficulty } = this.props
-    const { card1, card2 } = this.props.chosenCards
+    const { board, difficulty, status } = this.props
     const layout = layoutCards(board, difficulty)
-    if (card1 && card2) {
-      this.pause = setTimeout(this.pauseAndFlip, 750)
+    if (status === 'In Progress') {
+      return (
+        <div>
+          {board && (
+            <div>
+              {layout.map((cardRow, ind) => (
+                <CardRow cardClick={this.cardClick} key={ind} cardRow={cardRow} />
+              ))}
+            </div>
+          )}
+        </div>
+      )
     }
     return (
       <div>
-        {board && (
-          <div>
-            {layout.map((cardRow, ind) => (
-              <CardRow cardClick={this.cardClick} key={ind} cardRow={cardRow} />
-            ))}
-          </div>
-        )}
+        <Confetti height={'100vh'} width={'100vw'} recycle={false} />
+        <span>YOU WINN!!!</span>
       </div>
     )
   }
@@ -160,14 +171,18 @@ class Board extends Component {
 Board.propTypes = {
   board: PropTypes.instanceOf(Array).isRequired,
   difficulty: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
   chosenCards: PropTypes.instanceOf(Object).isRequired,
-  setDifficulty: PropTypes.func.isRequired,
+  timer: PropTypes.instanceOf(Object).isRequired,
+  updateDifficulty: PropTypes.func.isRequired,
   newBoard: PropTypes.func.isRequired,
-  resetChoices: PropTypes.func.isRequired,
+  resetChosen: PropTypes.func.isRequired,
   pickCard: PropTypes.func.isRequired,
-  resetCards: PropTypes.func.isRequired,
   flip: PropTypes.func.isRequired,
-  matchedCards: PropTypes.func.isRequired,
+  matchedCard: PropTypes.func.isRequired,
+  disableCard: PropTypes.func.isRequired,
+  updateStatusWon: PropTypes.func.isRequired,
+  togglePause: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board)
