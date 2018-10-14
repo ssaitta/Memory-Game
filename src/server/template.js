@@ -10,7 +10,7 @@ export default vo => `<!DOCTYPE html>
     <meta httpEquiv="Content-Language" content="en" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Kodchasan" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
     ${
       vo.mainCSSBundle
         ? '<link rel="stylesheet" type="text/css" href="' + vo.mainCSSBundle + '">'

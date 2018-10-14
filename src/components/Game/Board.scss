@@ -1,0 +1,170 @@
+@keyframes fadein {
+  from { opacity: 0}
+  to   { opacity: 1}
+}
+
+.cardRow {
+    display: flex;
+    flex-direction: row; 
+    justify-content:space-around;
+    align-items: center;
+    animation: fadein 1s;
+  }
+
+  .cardEasy{
+    display: flex;
+    margin: 30px;
+    border-radius: 15px;
+    background-color: #3aa03a;
+    color:#FAE24C;
+    padding: 5px;
+    transform-style: preserve-3d;
+    transition: .3s ease-in;
+  }
+
+  .cardHard{
+    display: flex;
+    margin: 16px;
+    border-radius: 15px;
+    background-color: #3aa03a;
+    color:#FAE24C;
+    padding: 5px;
+    transform-style: preserve-3d;
+    transition: .3s ease-in;
+  }
+
+
+  @keyframes glowing {
+    0% { box-shadow: 0 0 -10px #c4a300; }
+    40% { box-shadow: 0 0 20px #c4a300; }
+    60% { box-shadow: 0 0 20px #c4a300; }
+    100% { box-shadow: 0 0 -10px #c4a300; }
+  }
+  
+  .cardEasy:hover{
+    animation: glowing 3s 
+  }
+
+  .cardHard:hover{
+    animation: glowing 3s 
+  }
+
+  .cardEasy:focus { 
+    animation: glowing 3s;
+    outline:0;
+  }
+
+  .innerCardEasy{
+    text-align: center;
+    margin-top: 5%;
+  }
+
+  .innerCardHard{
+    text-align: center;
+    margin-top: 11%;
+  }
+  
+  .backOfCardEasy{
+    color: transparent;
+    background-size: cover; 
+    border: 1px solid grey;
+    background-image: url('../../assets/img/babar.jpeg');
+    transform-style: preserve-3d;
+    transform: rotateY(-180deg);
+    transition: .4s ease-out;
+  }
+  
+  .backOfCardHard{
+    color: transparent;
+    background-size: cover; 
+    border: 1px solid grey;
+    background-image: url('../../assets/img/babar.jpeg');
+    transform-style: preserve-3d;
+    transform: rotateY(-180deg);
+    transition: .4s ease-out;
+  }
+  
+  .matched{
+    pointer-events: none;
+  }
+  
+
+@media screen and (min-width: 860px){
+    .innerCardEasy{
+      padding-top: 40px;
+      font-size: 100px;
+      width: 150px;
+      height: 156px;
+    }
+
+    .innerCardHard{
+      font-size: 72px;
+      width: 143px;
+      height: 98px;
+    }
+  }
+  
+@media screen and (max-width: 950px) and (min-width: 650px){
+  .cardEasy{
+    border-radius: 8px;
+    margin: 25px;
+  }
+
+  .innerCardEasy{
+    padding-top: 29px;
+    font-size: 72px;
+    width: 90px;
+    height: 109px;
+  }
+
+  .innerCardHard{
+     font-size: 64px;
+     width: 90px;
+     height: 97px;
+  }
+}
+  
+@media screen and (max-width: 650px) and (min-width: 426px){
+  .cardEasy{
+    border-radius: 8px;
+    margin: 10px;
+  }
+
+  .innerCardEasy{
+      padding-top: 26px;
+      font-size: 62px;
+      width: 70px;
+      height: 92px;
+      text-align: center;
+    }
+
+    .innerCardHard{
+      font-size: 62px;
+      width: 70px;
+      height: 92px;
+      text-align: center;
+    }
+  }
+
+@media screen and (max-width: 425px){
+  .cardEasy{
+    border-radius: 8px;
+    margin: 10px;
+  }
+  .innerCardEasy{
+      padding-top: 20px;
+      margin-top: 0%;
+      font-size: 54px;
+      width: 55px;
+      height: 80px;
+      text-align: center;
+    }
+  
+    .innerCardHard{
+      margin-top: 0%;
+      font-size: 54px;
+      width: 55px;
+      height: 80px;
+      text-align: center;
+    }
+  }

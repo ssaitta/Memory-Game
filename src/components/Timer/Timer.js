@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import styles from './Timer.scss'
+import ResetButton from '../Buttons/ResetButton'
 import { pauseTime, resetTime, incrementTime } from '../../store'
 
 export const formatTime = time => {
@@ -24,6 +25,7 @@ Timer.propTypes = {
 
 const mapStateToProps = state => ({
   timer: state.timer,
+  status: state.status,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -66,20 +68,22 @@ class TimerContainer extends React.Component {
   }
 
   render() {
-    const { timer } = this.props
+    const { timer, status } = this.props
     return (
-      <div>
-        <Timer time={timer.secondsElapsed} />
-        {timer.pause && (
-          <button className={styles.timerButton} onClick={this.toggleTimer}>
-            Start
-          </button>
-        )}
-        {!timer.pause && (
-          <button className={styles.timerButton} onClick={this.toggleTimer}>
-            Pause
-          </button>
-        )}
+      <div className={styles.infoBar}>
+        <div className={styles.timerContainer}>
+          <Timer time={timer.secondsElapsed} />
+          <div className={styles.timerButtonContainer}>
+            {!timer.pause && (
+              <button className={styles.timerButton} onClick={this.toggleTimer}>
+                Pause
+              </button>
+            )}
+          </div>
+        </div>
+        <div className={styles.resetBtnContainer}>
+          {status === 'In Progress' && <ResetButton className={styles.resetBtn} />}
+        </div>
       </div>
     )
   }
@@ -87,6 +91,7 @@ class TimerContainer extends React.Component {
 
 TimerContainer.propTypes = {
   timer: PropTypes.instanceOf(Object).isRequired,
+  status: PropTypes.string.isRequired,
   resetClock: PropTypes.func.isRequired,
   increment: PropTypes.func.isRequired,
   togglePause: PropTypes.func.isRequired,

@@ -6,8 +6,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import board from './board'
 import chosenCards from './chosenCards'
 import difficulty from './difficulty'
-import timer from './timer'
 import status from './status'
+import timer from './timer'
 
 const reducer = combineReducers({
   board,
@@ -24,8 +24,8 @@ const middleware = composeWithDevTools(
 const store = createStore(reducer, middleware)
 
 export default store
-export * from './board'
-export * from './chosenCards'
-export * from './difficulty'
-export * from './timer'
-export * from './status'
+export { resetCards, getCards, fetchCards, flipCard, matchedCards } from './board'
+export { chooseCard, disableCards, resetChoices } from './chosenCards'
+export { setDifficulty } from './difficulty'
+export { updateStatus } from './status'
+export { resetTime, pauseTime, incrementTime } from './timer'

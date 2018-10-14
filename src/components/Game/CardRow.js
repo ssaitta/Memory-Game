@@ -2,11 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Card from './Card'
-import styles from '../Game/Game.scss'
+import styles from '../Game/Board.scss'
 
 const CardRow = props => (
   <div className={styles.cardRow}>
-    {props.cardRow.map((card, ind) => <Card key={ind} cardClick={props.cardClick} card={card} />)}
+    {props.cardRow.map((card, ind) => (
+      <Card key={ind} gameLevel={props.gameLevel} cardClick={props.cardClick} card={card} />
+    ))}
   </div>
 )
 

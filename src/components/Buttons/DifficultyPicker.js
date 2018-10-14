@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-class Difficulty extends Component {
+class DifficultyPicker extends Component {
   constructor(props) {
     super(props)
     this.onClick = this.onClick.bind(this)
@@ -36,7 +36,7 @@ class Difficulty extends Component {
 
   render() {
     return (
-      <form className={styles.resetBtn}>
+      <form className={styles.difficultyPicker}>
         <fieldset>
           <legend>Select difficulty</legend>
           <div>
@@ -66,11 +66,11 @@ class Difficulty extends Component {
   }
 }
 
-Difficulty.propTypes = {
+DifficultyPicker.propTypes = {
   updateDifficulty: PropTypes.func.isRequired,
   updateStatusInProgress: PropTypes.func.isRequired,
   togglePause: PropTypes.func.isRequired,
   resetClock: PropTypes.func.isRequired,
 }
 
-export default connect(null, mapDispatchToProps)(Difficulty)
+export default connect(null, mapDispatchToProps)(DifficultyPicker)

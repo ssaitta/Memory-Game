@@ -2,7 +2,7 @@ const UPDATE_STATUS = 'UPDATE_STATUS'
 
 export const updateStatus = str => ({ type: UPDATE_STATUS, str })
 
-const initalState = 'In Progress'
+const initalState = 'won' //'In Progress'
 
 const game = function(state = initalState, action) {
   switch (action.type) {

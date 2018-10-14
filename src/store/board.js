@@ -31,9 +31,9 @@ export const flipCard = card => ({
   card,
 })
 
-export const matchedCards = card => ({
+export const matchedCards = cards => ({
   type: MATCHED_CARDS,
-  card,
+  cards,
 })
 
 const initalState = []
@@ -51,7 +51,7 @@ const board = function(state = initalState, action) {
       })
       return [...shuffle(action.cards)]
     case MATCHED_CARDS:
-      return toggleMatched(action.card, state.slice())
+      return toggleMatched(action.cards, state.slice())
     default:
       return state
   }

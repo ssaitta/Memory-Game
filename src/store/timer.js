@@ -3,8 +3,7 @@ const PAUSE_TOGGLE = 'PAUSE_TOGGLE'
 const INCREMENT_TIME = 'INCREMENT_TIME'
 
 export const resetTime = () => ({ type: RESET_TIME, secondsElapsed: 0 })
-export const pauseTime = (bool) => ({ type: PAUSE_TOGGLE, pause: bool })
-// export const resumeTime = () => ({type:PAUSE_TOGGLE, pause:false})
+export const pauseTime = bool => ({ type: PAUSE_TOGGLE, pause: bool })
 export const incrementTime = () => ({ type: INCREMENT_TIME })
 
 const initalState = {

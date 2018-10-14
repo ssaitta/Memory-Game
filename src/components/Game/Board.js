@@ -1,23 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Confetti from 'react-confetti'
 
 import {
   fetchCards,
-  setDifficulty,
   resetChoices,
   matchedCards,
-  chooseCard1,
-  chooseCard2,
+  chooseCard,
   flipCard,
-  disableCard1,
-  disableCard2,
+  disableCards,
   updateStatus,
   pauseTime,
 } from '../../store'
 import CardRow from './CardRow'
+import ResetButton from '../Buttons/ResetButton'
 import { checkCards, checkBoard } from '../../client/gameLogic'
+import styles from './Game.scss'
 
 const mapStateToProps = state => ({
   board: state.board,
@@ -28,31 +26,20 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateDifficulty(difficulty) {
-    dispatch(setDifficulty(difficulty))
-  },
   newBoard(difficulty) {
     dispatch(fetchCards(difficulty))
   },
   resetChosen() {
     dispatch(resetChoices())
   },
-  matchedCard(card) {
-    dispatch(matchedCards(card))
+  matchedCard(cards) {
+    dispatch(matchedCards(cards))
   },
   pickCard(card, turn) {
-    if (turn === 1) {
-      dispatch(chooseCard1(card))
-    } else {
-      dispatch(chooseCard2(card))
-    }
+    dispatch(chooseCard(card, turn))
   },
-  disableCard(card, turn) {
-    if (turn === 1) {
-      dispatch(disableCard1(card))
-    } else {
-      dispatch(disableCard2(card))
-    }
+  disableCard(cards) {
+    dispatch(disableCards(cards))
   },
   flip(card) {
     dispatch(flipCard(card))
@@ -89,9 +76,8 @@ class Board extends Component {
   }
 
   componentDidMount() {
-    const { updateDifficulty, newBoard } = this.props
-    updateDifficulty('easy')
-    newBoard(this.props.difficulty)
+    const { difficulty, newBoard } = this.props
+    newBoard(difficulty)
   }
 
   componentDidUpdate(prevProps) {
@@ -109,17 +95,14 @@ class Board extends Component {
   }
 
   pauseAndFlip() {
-    const { card1, card2 } = this.props.chosenCards
     const { flip, resetChosen, disableCard, chosenCards, matchedCard } = this.props
     if (checkCards(chosenCards)) {
-      matchedCard(card1)
-      matchedCard(card2)
-      disableCard(card1, 1)
-      disableCard(card2, 2)
+      matchedCard(chosenCards)
+      disableCard(chosenCards)
       resetChosen()
     } else {
-      flip(card1)
-      flip(card2)
+      flip(chosenCards.card1)
+      flip(chosenCards.card2)
       resetChosen()
     }
   }
@@ -152,7 +135,12 @@ class Board extends Component {
           {board && (
             <div>
               {layout.map((cardRow, ind) => (
-                <CardRow cardClick={this.cardClick} key={ind} cardRow={cardRow} />
+                <CardRow
+                  cardClick={this.cardClick}
+                  key={ind}
+                  gameLevel={difficulty}
+                  cardRow={cardRow}
+                />
               ))}
             </div>
           )}
@@ -160,9 +148,9 @@ class Board extends Component {
       )
     }
     return (
-      <div>
-        <Confetti height={'100vh'} width={'100vw'} recycle={false} />
-        <span>YOU WINN!!!</span>
+      <div className={styles.winningContainer}>
+        <h1 className={styles.winnerText}>You won!</h1>
+        <ResetButton />
       </div>
     )
   }
@@ -174,7 +162,6 @@ Board.propTypes = {
   status: PropTypes.string.isRequired,
   chosenCards: PropTypes.instanceOf(Object).isRequired,
   timer: PropTypes.instanceOf(Object).isRequired,
-  updateDifficulty: PropTypes.func.isRequired,
   newBoard: PropTypes.func.isRequired,
   resetChosen: PropTypes.func.isRequired,
   pickCard: PropTypes.func.isRequired,

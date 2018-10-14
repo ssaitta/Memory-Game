@@ -14,10 +14,13 @@ export const toggleHide = (card, cardArray) => {
   return [].concat(cardArray.slice(0, index), newCard, cardArray.slice(index + 1))
 }
 
-export const toggleMatched = (card, cardArray) => {
-  const index = findCard(card, cardArray)
-  const newCard = Object.assign({}, card, { matched: !card.matched })
-  return [].concat(cardArray.slice(0, index), newCard, cardArray.slice(index + 1))
+export const toggleMatched = (cards, cardArray) => {
+  const index1 = findCard(cards.card1, cardArray)
+  const index2 = findCard(cards.card2, cardArray)
+  const newCard1 = Object.assign({}, cards.card1, { matched: !cards.card1.matched })
+  const newCard2 = Object.assign({}, cards.card2, { matched: !cards.card2.matched })
+  const newArray = [].concat(cardArray.slice(0, index1), newCard1, cardArray.slice(index1 + 1))
+  return [].concat(newArray.slice(0, index2), newCard2, newArray.slice(index2 + 1))
 }
 
 export const shuffle = array => {
