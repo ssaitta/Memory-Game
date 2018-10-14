@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import styles from '../Game/Board.scss'
+import styles from '../Styles/Board.scss'
 
 const Card = props => {
   const { card, cardClick, gameLevel } = props

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Timer from '../Timer/Timer'
-import styles from './Game.scss'
+import styles from '../Styles/Game.scss'
 import Board from './Board'
 import DifficultyPicker from '../Buttons/DifficultyPicker'
 

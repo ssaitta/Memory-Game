@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { resetCards, resetChoices, updateStatus, pauseTime, resetTime } from '../../store'
-import styles from '../Game/Game.scss'
+import styles from '../Styles/Game.scss'
 
 const mapStateToProps = state => ({
   board: state.board,

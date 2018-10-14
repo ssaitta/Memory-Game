@@ -54,6 +54,11 @@
     outline:0;
   }
 
+  .cardHard:focus { 
+    animation: glowing 3s;
+    outline:0;
+  }
+
   .innerCardEasy{
     text-align: center;
     margin-top: 5%;

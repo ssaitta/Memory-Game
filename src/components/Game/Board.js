@@ -15,7 +15,7 @@ import {
 import CardRow from './CardRow'
 import ResetButton from '../Buttons/ResetButton'
 import { checkCards, checkBoard } from '../../client/gameLogic'
-import styles from './Game.scss'
+import styles from '../Styles/Game.scss'
 
 const mapStateToProps = state => ({
   board: state.board,

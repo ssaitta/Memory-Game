@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import styles from './Timer.scss'
+import styles from '../Styles/Timer.scss'
 import ResetButton from '../Buttons/ResetButton'
 import { pauseTime, resetTime, incrementTime } from '../../store'
 

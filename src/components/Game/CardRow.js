@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Card from './Card'
-import styles from '../Game/Board.scss'
+import styles from '../Styles/Board.scss'
 
 const CardRow = props => (
   <div className={styles.cardRow}>

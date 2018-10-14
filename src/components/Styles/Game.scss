@@ -1,5 +1,5 @@
 @import './Board.scss';
-@import '../Timer/Timer.scss';
+@import './Timer.scss';
 
 $text-font: 'Libre Franklin', sans-serif;
 
@@ -71,7 +71,8 @@ $text-font: 'Libre Franklin', sans-serif;
 }
 
 #gameTable{
-  border-top: 2px solid grey
+  border-top: 2px solid grey;
+  background-color: whitesmoke;
 }
 
 @keyframes fadein {

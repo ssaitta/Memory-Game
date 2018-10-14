@@ -1,7 +1,7 @@
 // Use `npm run test` to run the test suite on demand;
 // `npm run test-watch` will re-run it automatically with every code change.
 
-import { formatTime } from './Timer'
+import { formatTime } from '../Timer/Timer'
 
 test('Test invalid time ', () => {
   expect(formatTime(-1)).toBe('--:--')
