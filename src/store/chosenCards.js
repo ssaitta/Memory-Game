@@ -17,7 +17,7 @@ export const resetChoices = () => ({ type: RESET_CHOICES })
 
 const intialState = { card1: null, card2: null }
 
-const chosenCards = function(state = intialState, action) {
+const chosenCards = (state = intialState, action) => {
   switch (action.type) {
     case CHOOSE_CARD:
       if (action.turn === 1) {

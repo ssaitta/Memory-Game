@@ -11,7 +11,7 @@ const initalState = {
   pause: true,
 }
 
-const timer = function(state = initalState, action) {
+const timer = (state = initalState, action) => {
   switch (action.type) {
     case RESET_TIME:
       return Object.assign({}, state, { secondsElapsed: 0 })

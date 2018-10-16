@@ -7,7 +7,7 @@ export const setDifficulty = difficulty => ({
 
 const initalState = 'easy'
 
-const difficulty = function(state = initalState, action) {
+const difficulty = (state = initalState, action) => {
   switch (action.type) {
     case SET_DIFFICULTY:
       return action.difficulty

@@ -4,7 +4,7 @@ export const updateStatus = str => ({ type: UPDATE_STATUS, str })
 
 const initalState = 'In Progress'
 
-const game = function(state = initalState, action) {
+const game = (state = initalState, action) => {
   switch (action.type) {
     case UPDATE_STATUS:
       return action.str

@@ -29,3 +29,10 @@ export const mockChosenCardsDontMatch = {
   card1: { value: '♫', row: 1, column: 0, hidden: false, matched: false },
   card2: { value: '✈', row: 1, column: 1, hidden: false, matched: false },
 }
+
+export const mockCardRow = [
+  { value: '♘', row: 0, column: 0, hidden: true, matched: false },
+  { value: '✈', row: 0, column: 1, hidden: true, matched: false },
+  { value: '☆', row: 0, column: 2, hidden: true, matched: false },
+  { value: '♘', row: 0, column: 3, hidden: true, matched: false },
+]

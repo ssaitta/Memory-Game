@@ -38,7 +38,7 @@ export const matchedCards = cards => ({
 
 const initalState = []
 
-const board = function(state = initalState, action) {
+const board = (state = initalState, action) => {
   switch (action.type) {
     case GET_CARDS:
       return [...action.cards]
