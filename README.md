@@ -1,5 +1,5 @@
 # Game of Memory
-Written by Sierra Saitta-Zelterman for the The New York Times. Game pieces pulled from [here](https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json), with starting scaffolding [NYT kyt](https://github.com/NYTimes/kyt). 
+Written by Sierra Saitta-Zelterman. Game pieces pulled from [here](https://web-code-test-dot-nyt-games-prd.appspot.com/cards.json), with starting scaffolding [NYT kyt](https://github.com/NYTimes/kyt). 
 
 ## How to play
 
